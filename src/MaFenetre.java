@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import javax.swing.* ;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.Image;
+import java.awt.Image;d
 	public class MaFenetre extends JFrame implements ActionListener{
 		public static void main (String args[]) {
 			new MaFenetre(); 
