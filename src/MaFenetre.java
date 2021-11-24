@@ -8,6 +8,7 @@ import java.awt.Image;
 		public static void main (String args[]) {
 			new MaFenetre(); 
 			}
+		
 		private static final long serialVersionUID = 1L;
 		private JPanel menu_pan, pan_creer_client, pan_creer_med, pan_afficher_client, pan_remplir_stock, pan_traiter_achat;
 		private JButton bouton_titre, bouton_creer_client, bouton_creer_med, bouton_affiche_client, bouton_remplir_stock, bouton_traiter_achat,
