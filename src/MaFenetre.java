@@ -1,3 +1,4 @@
+COUCOUC
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.* ;
@@ -139,7 +140,7 @@ import java.awt.Image;
 				
 				description_lab = new JLabel("Description :  "); description_txt = new JTextField(); description_txt.setColumns(25);
 			
-				prix_lab = new JLabel("Prix (€) : "); prix_txt = new JTextField(); prix_txt.setColumns(5);
+				prix_lab = new JLabel("Prix (Â€) : "); prix_txt = new JTextField(); prix_txt.setColumns(5);
 				entre_0_et_9_only(prix_txt);
 				
 				quantite_lab = new JLabel("Quantite medicaments par boite :"); quantite_txt = new JTextField(); quantite_txt.setColumns(4);
@@ -178,7 +179,7 @@ import java.awt.Image;
 									Integer.parseInt(quantite_txt.getText()), Integer.parseInt(stock_txt.getText()));
 							client_cree = new JOptionPane();
 							color_pane(vert);
-							JOptionPane.showMessageDialog(null, "Le médicament a été ajouté !", "Information",JOptionPane.INFORMATION_MESSAGE, img_med);
+							JOptionPane.showMessageDialog(null, "Le mÃ©dicament a Ã©tÃ© ajoutÃ© !", "Information",JOptionPane.INFORMATION_MESSAGE, img_med);
 							liste_tous_medicament.add(medicament);
 						}
 					}catch(Exception_med_deja_existe med) {}
@@ -222,15 +223,15 @@ import java.awt.Image;
 								if(liste_clients.get(i).getNum_securite_sociale().equals(num_secu_soc_txt.getText())) {
 									infos = infos + "\nNom : " + liste_clients.get(i).getNom() + ", Prenom : "+ liste_clients.get(i).getPrenom()
 											+ ". \nAdresse : " + liste_clients.get(i).getAdresse() +"\nNumero telephone: " + liste_clients.get(i).getNum_tel();
-									infos = infos + "\n\nListe des achats effectués : ";
+									infos = infos + "\n\nListe des achats effectuÃ©s : ";
 									for(int j = 0; j<liste_clients.get(i).getListe_Achats().size(); j++) {
 										infos = infos + "\n Reference : " + liste_clients.get(i).getListe_Achats().get(j).getReference() 
 												+ " | Libelle : " + liste_clients.get(i).getListe_Achats().get(j).getLibelle()
 												+ " | Quantite achetee : " + liste_clients.get(i).getListe_Achats().get(j).getStock()
-												+ " | Prix : " + liste_clients.get(i).getListe_Achats().get(j).getPrix()+ " € "
+												+ " | Prix : " + liste_clients.get(i).getListe_Achats().get(j).getPrix()+ " Â€ "
 												+ "\n                                                                         "
 												+ "Total : " + liste_clients.get(i).getListe_Achats().get(j).getStock()
-												                         *liste_clients.get(i).getListe_Achats().get(j).getPrix()+ " € ";
+												                         *liste_clients.get(i).getListe_Achats().get(j).getPrix()+ " Â€ ";
 									}
 									infos_client = new JOptionPane();
 									color_pane(vert_1);
@@ -247,7 +248,7 @@ import java.awt.Image;
 				
 				ref_lab = new JLabel ("Reference :");  ref_txt = new JTextField();  ref_txt.setColumns(26);
 				
-				stock_lab = new JLabel("Quantite boites à ajouter (stock) :"); stock_txt = new JTextField(); stock_txt.setColumns(15);
+				stock_lab = new JLabel("Quantite boites Ã  ajouter (stock) :"); stock_txt = new JTextField(); stock_txt.setColumns(15);
 				entre_0_et_9_only(stock_txt);
 				
 				bouton_ajt_stock = new JButton ("Ajouter");  bouton_ajt_stock.addActionListener(this);
@@ -276,7 +277,7 @@ import java.awt.Image;
 							infos_ajt_stock = new JOptionPane();
 							infos_client = new JOptionPane();
 							color_pane(rouge_l);
-							int valid_creer_med = JOptionPane.showConfirmDialog(null, "Ce médicament n'existe pas, voulez vous le rajouter?", "Demande de création médicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_client);
+							int valid_creer_med = JOptionPane.showConfirmDialog(null, "Ce mÃ©dicament n'existe pas, voulez vous le rajouter?", "Demande de crÃ©ation mÃ©dicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_client);
 							if(valid_creer_med == JOptionPane.YES_OPTION){
 								bouton_creer_med.doClick();}}}
 				}catch(Exception_champ_vide vide) {}
@@ -290,7 +291,7 @@ import java.awt.Image;
 					
 					ArrayList<String> liste_medicament = new ArrayList<String>();
 					for(int j = 0; j<liste_tous_medicament.size(); j++) {
-						String nom_med = liste_tous_medicament.get(j).getLibelle() + ", Réf.: " + liste_tous_medicament.get(j).getReference();
+						String nom_med = liste_tous_medicament.get(j).getLibelle() + ", RÃ©f.: " + liste_tous_medicament.get(j).getReference();
 						liste_medicament.add(nom_med);}
 					
 					choix_med.setModel(new DefaultComboBoxModel(liste_medicament.toArray()));
@@ -335,8 +336,8 @@ import java.awt.Image;
 									liste_clients.get(i).getListe_Achats().add(achat);
 									achat_valide = new JOptionPane();
 									color_pane(vert);
-									JOptionPane.showMessageDialog(null, "Achat validé !\n Total à payer : "
-									+(liste_tous_medicament.get(indice).getPrix())*(Integer.parseInt(quantite_txt.getText()))+ " €"
+									JOptionPane.showMessageDialog(null, "Achat validÃ© !\n Total Ã  payer : "
+									+(liste_tous_medicament.get(indice).getPrix())*(Integer.parseInt(quantite_txt.getText()))+ " Â€"
 									, "Information",JOptionPane.INFORMATION_MESSAGE, img_achat);
 									
 									}}
