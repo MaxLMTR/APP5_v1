@@ -1,3 +1,4 @@
+
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.* ;
@@ -35,7 +36,7 @@ import java.awt.Image;
 		public MaFenetre(){
 			JFrame menu = new JFrame();  menu.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);  
 			menu.setTitle("Gestion Clients & Medicaments");  menu.setSize(400, 800);
-			menu_pan = new JPanel();  menu_pan.setLayout(new GridLayout(8,8));
+			menu_pan = new JPanel();  menu_pan.setLayout(new GridLayout(6,6));
 			
 			//affichage du titre
 			bouton_titre = new JButton(""); bouton_titre.setBorderPainted(false); bouton_titre.setBackground(Color.WHITE);;
