@@ -275,7 +275,7 @@ import java.awt.Image;
 							infos_ajt_stock = new JOptionPane();
 							infos_client = new JOptionPane();
 							color_pane(rouge_l);
-							int valid_creer_med = JOptionPane.showConfirmDialog(null, "Ce medicament n'existe pas, voulez vous le rajouter?", "Demande de creation medicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_client);
+							int valid_creer_med = JOptionPane.showConfirmDialog(null, "Ce medicament n'existe pas, voulez vous le rajouter?", "Demande de creation medicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_med);
 							if(valid_creer_med == JOptionPane.YES_OPTION){
 								bouton_creer_med.doClick();}}}
 				}catch(Exception_champ_vide vide) {}
@@ -315,35 +315,40 @@ import java.awt.Image;
 			if (e.getSource() == bouton_ajt_achat) {
 				try {
 					champ_vide(num_secu_soc_txt.getText()); champ_vide(quantite_txt.getText());
-					try {
-						verif_num_secu_soc_appartient(num_secu_soc_txt.getText());
+					for (int i =0; i<liste_clients.size(); i++) {
 						try {
-							verif_stock(Integer.parseInt(quantite_txt.getText()));
-							
-							int indice = choix_med.getSelectedIndex();
-							for(int i =0; i<liste_clients.size();i++) {
-								if(liste_clients.get(i).getNum_securite_sociale().equals(num_secu_soc_txt.getText())) {
-									Medicament achat = new Medicament(liste_tous_medicament.get(indice).getReference(), 
-											liste_tous_medicament.get(indice).getLibelle(), 
-											liste_tous_medicament.get(indice).getDescription(), 
-											liste_tous_medicament.get(indice).getPrix(), 
-											liste_tous_medicament.get(indice).getQuantite(), 
-											Integer.parseInt(quantite_txt.getText()));
-									liste_tous_medicament.get(indice).setStock( liste_tous_medicament.get(indice).getStock() 
-											- Integer.parseInt(quantite_txt.getText()));
-									liste_clients.get(i).getListe_Achats().add(achat);
-									achat_valide = new JOptionPane();
-									color_pane(vert);
-									JOptionPane.showMessageDialog(null, "Achat valide !\n Total a payer : "
-									+(liste_tous_medicament.get(indice).getPrix())*(Integer.parseInt(quantite_txt.getText()))+ " €"
-									, "Information",JOptionPane.INFORMATION_MESSAGE, img_achat);
-									
-									}}
-						}catch(Exception_stock_vide stock) {}
-					}catch(Exception_num_secu_soc_appartient secu) {}
+							if(liste_clients.get(i).getNum_securite_sociale().equals(num_secu_soc_txt.getText())){
+								verif_stock(Integer.parseInt(quantite_txt.getText()));
+								int indice = choix_med.getSelectedIndex();
+								for(int j =0; j<liste_clients.size();j++) {
+									if(liste_clients.get(i).getNum_securite_sociale().equals(num_secu_soc_txt.getText())) {
+										Medicament achat = new Medicament(liste_tous_medicament.get(indice).getReference(), 
+												liste_tous_medicament.get(indice).getLibelle(), 
+												liste_tous_medicament.get(indice).getDescription(), 
+												liste_tous_medicament.get(indice).getPrix(), 
+												liste_tous_medicament.get(indice).getQuantite(), 
+												Integer.parseInt(quantite_txt.getText()));
+										liste_tous_medicament.get(indice).setStock( liste_tous_medicament.get(indice).getStock() 
+												- Integer.parseInt(quantite_txt.getText()));
+										liste_clients.get(i).getListe_Achats().add(achat);
+										achat_valide = new JOptionPane();
+										color_pane(vert);
+										JOptionPane.showMessageDialog(null, "Achat valide !\n Total a payer : "
+											+(liste_tous_medicament.get(indice).getPrix())*(Integer.parseInt(quantite_txt.getText()))+ " €"
+											, "Information",JOptionPane.INFORMATION_MESSAGE, img_achat);
+											
+									}}}
+							else {
+							infos_ajt_stock = new JOptionPane();
+							infos_client = new JOptionPane();
+							color_pane(rouge_l);
+							int valid_creer_client = JOptionPane.showConfirmDialog(null, "Ce client n'existe pas, voulez vous le rajouter?", "Demande de creation medicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_client);
+							if(valid_creer_client == JOptionPane.YES_OPTION){
+								bouton_creer_client.doClick();}
+							}
+						}catch(Exception_stock_vide stock) {}}
 				}catch(Exception_champ_vide champ2) {}
-			}
-			
+			}	
 		}
 				
 
