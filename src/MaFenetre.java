@@ -2,7 +2,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.* ;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Image;
 
