@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 	public class MaFenetre extends JFrame implements ActionListener{
 		public static void main (String args[]) {
-			d
 			new MaFenetre(); 
 			}
 		
