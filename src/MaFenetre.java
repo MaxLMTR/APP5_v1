@@ -10,7 +10,6 @@ import java.awt.Image;
 			new MaFenetre(); 
 			}
 		
-		
 		private static final long serialVersionUID = 1L;
 		private JPanel menu_pan, pan_creer_client, pan_creer_med, pan_afficher_client, pan_remplir_stock, pan_traiter_achat;
 		private JButton bouton_titre, bouton_creer_client, bouton_creer_med, bouton_affiche_client, bouton_remplir_stock, bouton_traiter_achat,
@@ -170,8 +169,9 @@ import java.awt.Image;
 					try {
 						med_existe_deja(ref_txt.getText());
 						int valid_creer_med = JOptionPane.showConfirmDialog(null, "Reference : "+ ref_txt.getText() + "\nLibelle : "+ libelle_txt.getText()  
-								+"\nDescription : "+ description_txt.getText() + "\nPrix : " + prix_txt.getText() + "\nQuantite medicaments : " + quantite_txt.getText()
-								+"\n\nVoulez-vous valider ?", "Demande de validation creation medicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_med);
+								+"\nDescription : "+ description_txt.getText() + "\nPrix : " + prix_txt.getText() + "\nQuantite medicaments (par boîte) : " + quantite_txt.getText()
+								+ "\nQuantite de stock : " + stock_txt.getText() +"\n\nVoulez-vous valider ?"
+								, "Demande de validation creation medicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_med);
 						if(valid_creer_med == JOptionPane.YES_OPTION){
 							Medicament medicament = new Medicament (ref_txt.getText(), libelle_txt.getText(), description_txt.getText(), Double.parseDouble(prix_txt.getText()), 
 									Integer.parseInt(quantite_txt.getText()), Integer.parseInt(stock_txt.getText()));
@@ -317,34 +317,35 @@ import java.awt.Image;
 					champ_vide(num_secu_soc_txt.getText()); champ_vide(quantite_txt.getText());
 					for (int i =0; i<liste_clients.size(); i++) {
 						try {
-							if(liste_clients.get(i).getNum_securite_sociale().equals(num_secu_soc_txt.getText())){
+							ArrayList<String> liste_num_secu_soc = new ArrayList<>();
+							for(int j = 0; j<liste_clients.size(); j++) {
+								liste_num_secu_soc.add(liste_clients.get(j).getNum_securite_sociale());}
+							
+							if(liste_num_secu_soc.contains(num_secu_soc_txt.getText())){
 								verif_stock(Integer.parseInt(quantite_txt.getText()));
 								int indice = choix_med.getSelectedIndex();
-								for(int j =0; j<liste_clients.size();j++) {
-									if(liste_clients.get(i).getNum_securite_sociale().equals(num_secu_soc_txt.getText())) {
-										Medicament achat = new Medicament(liste_tous_medicament.get(indice).getReference(), 
+								Medicament achat = new Medicament(liste_tous_medicament.get(indice).getReference(), 
 												liste_tous_medicament.get(indice).getLibelle(), 
 												liste_tous_medicament.get(indice).getDescription(), 
 												liste_tous_medicament.get(indice).getPrix(), 
 												liste_tous_medicament.get(indice).getQuantite(), 
 												Integer.parseInt(quantite_txt.getText()));
-										liste_tous_medicament.get(indice).setStock( liste_tous_medicament.get(indice).getStock() 
-												- Integer.parseInt(quantite_txt.getText()));
-										liste_clients.get(i).getListe_Achats().add(achat);
-										achat_valide = new JOptionPane();
-										color_pane(vert);
-										JOptionPane.showMessageDialog(null, "Achat valide !\n Total a payer : "
-											+(liste_tous_medicament.get(indice).getPrix())*(Integer.parseInt(quantite_txt.getText()))+ " €"
-											, "Information",JOptionPane.INFORMATION_MESSAGE, img_achat);
-											
-									}}}
+								liste_tous_medicament.get(indice).setStock( liste_tous_medicament.get(indice).getStock() 
+																			- Integer.parseInt(quantite_txt.getText()));
+								liste_clients.get(i).getListe_Achats().add(achat);
+								achat_valide = new JOptionPane();
+								color_pane(vert);
+								JOptionPane.showMessageDialog(null, "Achat valide !\n Total a payer : "
+										+(liste_tous_medicament.get(indice).getPrix())*(Integer.parseInt(quantite_txt.getText()))+ " €"
+										, "Information",JOptionPane.INFORMATION_MESSAGE, img_achat);
+							}
 							else {
-							infos_ajt_stock = new JOptionPane();
-							infos_client = new JOptionPane();
-							color_pane(rouge_l);
-							int valid_creer_client = JOptionPane.showConfirmDialog(null, "Ce client n'existe pas, voulez vous le rajouter?", "Demande de creation medicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_client);
-							if(valid_creer_client == JOptionPane.YES_OPTION){
-								bouton_creer_client.doClick();}
+								infos_ajt_stock = new JOptionPane();
+								infos_client = new JOptionPane();
+								color_pane(rouge_l);
+								int valid_creer_client = JOptionPane.showConfirmDialog(null, "Ce client n'existe pas, voulez vous le rajouter?", "Demande de creation medicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_client);
+								if(valid_creer_client == JOptionPane.YES_OPTION){
+									bouton_creer_client.doClick();}
 							}
 						}catch(Exception_stock_vide stock) {}}
 				}catch(Exception_champ_vide champ2) {}
