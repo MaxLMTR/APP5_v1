@@ -18,7 +18,7 @@ import java.awt.Image;
 		attention_nb_secu_soc, stock_lab;
 		JTextField nom_txt, prenom_txt, num_secu_soc_txt, adresse_txt, num_tel_txt, ref_txt, libelle_txt,
 		description_txt, prix_txt, quantite_txt, stock_txt;
-		JOptionPane client_cree, infos_client, infos_ajt_stock, achat_valide;
+		JOptionPane client_cree, infos_client, infos_ajt_stock, achat_valide, valider;
 		private static JComboBox<String> choix_med = new JComboBox<>();
 		private static ArrayList<Client> liste_clients = new ArrayList<Client>();
 		private static ArrayList<Medicament> liste_tous_medicament = new ArrayList<Medicament>();
@@ -31,11 +31,14 @@ import java.awt.Image;
 		private ImageIcon img_afficher = new ImageIcon(new ImageIcon("icones/afficher.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
 		private ImageIcon img_liste_achat = new ImageIcon(new ImageIcon("icones/liste_achat.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
 		private ImageIcon img_pharmacie = new ImageIcon(new ImageIcon("icones/pharmacie.png").getImage().getScaledInstance(380, 90, Image.SCALE_DEFAULT));
+		private ImageIcon img_tous_client = new ImageIcon(new ImageIcon("icones/tous_client.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
+		private ImageIcon img_tous_medicament = new ImageIcon(new ImageIcon("icones/tous_medicament.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
+
 		
 		public MaFenetre(){
 			JFrame menu = new JFrame();  menu.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);  
 			menu.setTitle("Gestion Clients & Medicaments");  menu.setSize(400, 800);
-			menu_pan = new JPanel();  menu_pan.setLayout(new GridLayout(6,6));
+			menu_pan = new JPanel();  menu_pan.setLayout(new GridLayout(8,8));
 			
 			//affichage du titre
 			bouton_titre = new JButton(""); bouton_titre.setBorderPainted(false); bouton_titre.setBackground(Color.WHITE);;
@@ -57,8 +60,10 @@ import java.awt.Image;
 			bouton_affiche_client.setIcon(img_afficher);
 			//afficher tous les médicaments
 			bouton_affiche_tous_med= new JButton ("Afficher la liste de tous les médicaments"); set_bouton(bouton_affiche_tous_med);
+			bouton_affiche_tous_med.setIcon(img_tous_medicament);
 			//afficher tous les clients
 			bouton_affiche_tous_clients= new JButton ("Afficher la liste de tous les clients"); set_bouton(bouton_affiche_tous_clients);
+			bouton_affiche_tous_clients.setIcon(img_tous_client);
 		
 		
 			menu_pan.add(bouton_titre);     menu_pan.add(bouton_traiter_achat);  menu_pan.add(bouton_creer_client);  
@@ -143,7 +148,7 @@ import java.awt.Image;
 				
 				description_lab = new JLabel("Description :  "); description_txt = new JTextField(); description_txt.setColumns(25);
 			
-				prix_lab = new JLabel("Prix () : "); prix_txt = new JTextField(); prix_txt.setColumns(5);
+				prix_lab = new JLabel("Prix (€) : "); prix_txt = new JTextField(); prix_txt.setColumns(5);
 				entre_0_et_9_only(prix_txt);
 				
 				quantite_lab = new JLabel("Quantite medicaments par boite :"); quantite_txt = new JTextField(); quantite_txt.setColumns(4);
@@ -175,7 +180,7 @@ import java.awt.Image;
 					try {
 						med_existe_deja(ref_txt.getText());
 						int valid_creer_med = JOptionPane.showConfirmDialog(null, "Reference : "+ ref_txt.getText() + "\nLibelle : "+ libelle_txt.getText()  
-								+"\nDescription : "+ description_txt.getText() + "\nPrix : " + prix_txt.getText() + "\nQuantite medicaments (par boîte) : " + quantite_txt.getText()
+								+"\nDescription : "+ description_txt.getText() + "\nPrix (€): " + prix_txt.getText() + "\nQuantite medicaments (par boîte) : " + quantite_txt.getText()
 								+ "\nQuantite de stock : " + stock_txt.getText() +"\n\nVoulez-vous valider ?"
 								, "Demande de validation creation medicament", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, img_med);
 						if(valid_creer_med == JOptionPane.YES_OPTION){
@@ -232,7 +237,7 @@ import java.awt.Image;
 										infos = infos + "\n Reference : " + liste_clients.get(i).getListe_Achats().get(j).getReference() 
 												+ " | Libelle : " + liste_clients.get(i).getListe_Achats().get(j).getLibelle()
 												+ " | Quantite achetee : " + liste_clients.get(i).getListe_Achats().get(j).getStock()
-												+ " | Prix : " + liste_clients.get(i).getListe_Achats().get(j).getPrix()+ "  "
+												+ " | Prix : " + liste_clients.get(i).getListe_Achats().get(j).getPrix()+ " € "
 												+ "\n                                                                         "
 												+ "Total : " + liste_clients.get(i).getListe_Achats().get(j).getStock()
 												                         *liste_clients.get(i).getListe_Achats().get(j).getPrix()+ "  ";
@@ -342,7 +347,7 @@ import java.awt.Image;
 								achat_valide = new JOptionPane();
 								color_pane(vert);
 								JOptionPane.showMessageDialog(null, "Achat valide !\n Total a payer : "
-										+(liste_tous_medicament.get(indice).getPrix())*(Integer.parseInt(quantite_txt.getText()))+ " "
+										+(liste_tous_medicament.get(indice).getPrix())*(Integer.parseInt(quantite_txt.getText()))+ " € "
 										, "Information",JOptionPane.INFORMATION_MESSAGE, img_achat);
 							}
 							else {
@@ -363,11 +368,11 @@ import java.awt.Image;
 					String text = "Voici la liste de tous les médicaments :";
 					for(int i = 0; i<liste_tous_medicament.size(); i++) {
 							text = text + "\nRéférence : " + liste_tous_medicament.get(i).getReference()+", Libellé : " + liste_tous_medicament.get(i).getLibelle() + ", Description : "+ liste_tous_medicament.get(i).getDescription()
-									+ ", Prix : " + liste_tous_medicament.get(i).getPrix()+ ", Quantité : "+ liste_tous_medicament.get(i).getQuantite();
+									+ ", Prix (€) : " + liste_tous_medicament.get(i).getPrix()+ ", Quantité : "+ liste_tous_medicament.get(i).getQuantite();
 						}
 					valider = new JOptionPane();
 					color_pane(vert_1);
-					JOptionPane.showMessageDialog(null, text, "Information",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, text, "Information",JOptionPane.INFORMATION_MESSAGE, img_tous_medicament);
 				}catch(Exception_client_med_vide vide) {}	
 			}
 			
@@ -378,11 +383,11 @@ import java.awt.Image;
 					for(int i = 0; i<liste_clients.size(); i++) {
 							text = text + "\nNuméro sécurité sociale : " + liste_clients.get(i).getNum_securite_sociale()+", Nom : " + liste_clients.get(i).getNom() + ", Prénom : "+ liste_clients.get(i).getPrenom()
 									+ ", Adresse : " + liste_clients.get(i).getAdresse()+ ", Numéro de téléphone : "+ liste_clients.get(i).getNum_tel()
-									+", Liste des médicaments achetés par le client :" + liste_clients.get(i).getListeMedicaments();
+									+", Liste des médicaments achetés par le client :" + liste_clients.get(i).getListe_Achats();
 						}
 					valider = new JOptionPane();
 					color_pane(vert_1);
-					JOptionPane.showMessageDialog(null, text, "Information",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, text, "Information",JOptionPane.INFORMATION_MESSAGE, img_tous_client);
 				}catch(Exception_client_med_vide vide) {}	
 			}
 		}
@@ -413,7 +418,7 @@ import java.awt.Image;
 						bouton.doClick();}}public void keyReleased(KeyEvent e) {}});;}
 		
 		private void verif_num_secu_soc(String num_secu_soc) throws Exception_verif_num_secu_soc {
-			if (num_secu_soc.length() > 13) {
+			if (num_secu_soc.length() < 13) {
 				throw new Exception_verif_num_secu_soc();}}
 		
 		private void champ_vide(String champ)throws Exception_champ_vide{
